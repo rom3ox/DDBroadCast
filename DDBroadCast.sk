@@ -1,0 +1,53 @@
+#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+# DDBroadCast.sk by rom3ox                    # 
+# Version: alpha v0.1                         #
+#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+
+# TO-DO:
+#============
+# - implementar comando /broadcast message para enviar un mensaje
+
+options:
+	# BroadCast Interval in seconds
+	BroadCast Interval: 120
+
+command /DDBroadCast [<text>] [<text>]:
+	description: Main DDBroadCast command
+	usage: /DDBroadCast <action> <arg1>
+	permission: DD.BroadCast.CMD.DDBroadCast
+	permission message: Lo siento pero no tienes suficientes permisos para ejecutar este comando
+	executable by: players and console
+	aliases: DDBC
+	trigger:
+		# -- AYUDA --
+		if argument 1 is "help" or "ayuda":
+			message "Esta es la ayuda de DDBroadCast: Aún por implementar"
+		# -- CREAR --
+		if argument 1 is "add" or "añadir":
+			message "quieres add un elemento"
+			if argument 2 is not set:
+				message "No has añadido ningún mensaje"
+			else:
+				set {DD.BroadCast.Message.1} to argument 2
+		# -- LEER --
+		if argument 1 is "get" or "leer":
+			if argument 2 is not set:
+				message "no has seleccionado ningún mensaje, introduce su id"
+			else:
+				message "%{DD.BroadCast.Message.1}%"
+		# -- LISTADO -- 
+		if argument 1 is "list" or "listado" or "lista":
+			message "[DDBroadCast] LISTADO DE MENSAJES"
+			loop {DD.BroadCast.Messages::*}:
+				message "%loop-value%"
+		# -- MENSAJE --
+		if argument 1 is "msg" or "mensaje":
+			if argument 2 is not set:
+				message "No has especificado ningún mensaje"
+			else:
+				broadcast "%arg 2%"
+			
+	
+every {@BroadCast Interval} real seconds:
+	broadcast "[<bold><yellow>SAutoMsg<reset>] <gray>Visita nuestra web: <light green>www.DDCraft.es <gray>para cualquier duda o sugerencia que tengas, o entra en nuestro wiki <light green>www.Min3craft.com."
+
